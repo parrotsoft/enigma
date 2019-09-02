@@ -78,7 +78,7 @@ public class Enigma {
         System.out.println("Digite en mensaje a encriptar :");
         mensaje = reader.nextLine();
         mensaje = mensaje.replaceAll(" ", "");
-        int numFilas = getNumFilas(mensaje.length() / saludo.getNumColumnas());
+        int numFilas = getNumFilas( (double)mensaje.length() / (double)saludo.getNumColumnas());
         char[][] matrix = new char[numFilas][saludo.getNumColumnas()];
         
         int posicionCadena = 0;
@@ -134,11 +134,7 @@ public class Enigma {
     }
     
     public static int getNumFilas(double numero) {
-        if(numero - Math.floor(numero) == 0) {
-            return (int)numero+1;
-        } else {
-            return (int)numero+1;
-        }
+        return (int)Math.ceil(numero);
     }
     
     public static String getTextoColumna(char matrix[][], char columna) {
