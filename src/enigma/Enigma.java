@@ -6,6 +6,7 @@
 package enigma;
 
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,7 +19,8 @@ public class Enigma {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Scanner reader = new Scanner(System.in);
+        desencriptar();
+        /*Scanner reader = new Scanner(System.in);
         
         int opcion;
         Saludo saludo = new Saludo();
@@ -28,7 +30,8 @@ public class Enigma {
             System.out.println("1. Mensaje de Saludo");
             System.out.println("2. Orden");
             System.out.println("3. Despedida");
-            System.out.println("4. Salir");
+            System.out.println("4. Desencriptar");
+            System.out.println("5. Salir");
             opcion = reader.nextInt();
             
             switch(opcion) {
@@ -42,9 +45,12 @@ public class Enigma {
                     despedida();
                     break;
                 case 4:
+                    desencriptar();
+                    break;
+                case 5:
                     break;
             }
-        } while (opcion != 4);
+        } while (opcion != 4);*/
 
     }
     
@@ -58,7 +64,7 @@ public class Enigma {
         System.out.println("Digite el orden de las columnas: ");
         saludo.setOdern(reader.next());
         saludo.setMensaje("HEIL HITLER "+saludo.getHora()+" "+saludo.getNumColumnas()+" C "+saludo.getOdern());
-        System.out.println("*** EL SALUDO ES: ***: \n" +saludo.getMensaje());
+        System.err.println("*** EL SALUDO ES: ***: \n" +saludo.getMensaje());
         
         char matriz[][] = new char[5][4];
         meteMensajeEnMatriz(matriz, saludo.getMensaje().replaceAll(" ", ""));
@@ -67,7 +73,7 @@ public class Enigma {
                 getTextoColumna(matriz, '2')+"\t"+getTextoColumna(matriz, '3')+
                 "\t"+getTextoColumna(matriz, '4');
         
-        System.out.println("*** EL SALUDO ENCRIPTADO ES : ***: \n" +mesajeEncriptado);
+        System.err.println("*** EL SALUDO ENCRIPTADO ES : ***: \n" +mesajeEncriptado);
         
         return saludo;
     }
@@ -120,7 +126,7 @@ public class Enigma {
                 getTextoColumna(matriz, '2')+"\t"+getTextoColumna(matriz, '3')+
                 "\t"+getTextoColumna(matriz, '4');
         
-        System.out.println("*** EL SALUDO ENCRIPTADO ES : ***: \n" +mesajeEncriptado);
+        System.err.println("*** EL SALUDO ENCRIPTADO ES : ***: \n" +mesajeEncriptado);
         
     }
     
@@ -153,6 +159,66 @@ public class Enigma {
         }
         return cadena;
     }
+    
+    //-----------------------Desencriptar-----------------------//
+    public static void desencriptar() {
+        Scanner reader = new Scanner(System.in);
+        System.out.println("--- MENU DE OPCIONES DESENCRIPTAR ---");
+        int opcion = 0;
+        do {
+            System.err.println("1. Digitar");
+            System.err.println("2. Salir");
+            opcion = reader.nextInt();
+            
+            switch(opcion) {
+                case 1:
+                    desencriptarSaludo();
+                    break;
+                case 2:
+                    break;
+            }
+        }while(opcion != 2);
+        
+    }
+    
+    public static void desencriptarSaludo() {
+        //Mensaje 1: HEIL HITLER 06 A 4 C 3142
+        //Encritado: HHEA1-EIR44-IT0C2-LL63
+        
+        Scanner reader = new Scanner(System.in);
+        System.out.println("Digite la candidad de Columnas : ");
+        int columnas = reader.nextInt();
+        //int columnas = 4;
+        System.out.println("Digite el mensaje de Saludo : ");
+        //String saludo = reader.next();
+        String saludo = "HHEA1EIR44IT0C2LL63";
+        int numFilas = getNumFilas((double) saludo.length()/ (double) columnas);
+        
+        char matrix[][] = new char[numFilas][columnas];
+        
+        int pos = 0;
+        for (int i = 0; i < matrix[0].length; i++) {
+            for (int j = 0; j < matrix.length; j++) {
+                if(pos < saludo.length()) {
+                    matrix[j][i] = saludo.charAt(pos);
+                    pos++;
+                }
+            }
+        }
+        
+        String cadena = "";
+        for (int i = 0; i < numFilas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                cadena += matrix[i][j];
+            }
+        }
+        
+        System.err.println(cadena);
+        
+        }
+    
+        
+    
     
     
 }
