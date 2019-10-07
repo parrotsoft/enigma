@@ -166,7 +166,7 @@ public class Enigma {
         System.out.println("--- MENU DE OPCIONES DESENCRIPTAR ---");
         int opcion = 0;
         do {
-            System.err.println("1. Digitar");
+            System.err.println("1. Saludo");
             System.err.println("2. Salir");
             opcion = reader.nextInt();
             
@@ -181,17 +181,25 @@ public class Enigma {
         
     }
     
+    public static int numColum(String msg){
+        int res = 0;
+        for (int i = 0; i < msg.length(); i++) {
+            if(Character.isDigit(msg.charAt(i))) {
+                res ++;
+            }
+        }
+        return res-3;
+    }
+    
     public static void desencriptarSaludo() {
         //Mensaje 1: HEIL HITLER 06 A 4 C 3142
         //Encritado: HHEA1-EIR44-IT0C2-LL63
         
         Scanner reader = new Scanner(System.in);
-        System.out.println("Digite la candidad de Columnas : ");
-        int columnas = reader.nextInt();
-        //int columnas = 4;
-        System.out.println("Digite el mensaje de Saludo : ");
-        //String saludo = reader.next();
-        String saludo = "HHEA1EIR44IT0C2LL63";
+        System.out.println("Digite el mensaje : ");
+        String saludo = reader.next();
+        int columnas = numColum(saludo);
+        //String saludo = "HHEA1EIR44IT0C2LL63";
         int numFilas = getNumFilas((double) saludo.length()/ (double) columnas);
         
         char matrix[][] = new char[numFilas][columnas];
