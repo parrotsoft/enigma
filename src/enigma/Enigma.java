@@ -6,6 +6,7 @@
 package enigma;
 
 import java.util.Scanner;
+import javax.sound.midi.SysexMessage;
 import javax.swing.JOptionPane;
 
 /**
@@ -167,7 +168,9 @@ public class Enigma {
         int opcion = 0;
         do {
             System.err.println("1. Saludo");
-            System.err.println("2. Salir");
+            System.err.println("2. Orden");
+            System.err.println("3. Despedida");
+            System.err.println("4. Salir");
             opcion = reader.nextInt();
             
             switch(opcion) {
@@ -177,7 +180,7 @@ public class Enigma {
                 case 2:
                     break;
             }
-        }while(opcion != 2);
+        }while(opcion != 4);
         
     }
     
@@ -196,12 +199,12 @@ public class Enigma {
         //Encritado: HHEA1-EIR44-IT0C2-LL63
         
         Scanner reader = new Scanner(System.in);
-        System.out.println("Digite el mensaje : ");
-        String saludo = reader.next();
-        int columnas = numColum(saludo);
-        //String saludo = "HHEA1EIR44IT0C2LL63";
-        int numFilas = getNumFilas((double) saludo.length()/ (double) columnas);
+        //System.out.println("Digite el mensaje : ");
+        //String saludo = reader.next();
+        String saludo = "HHEA1EIR44IT0C2LL63";
         
+        int columnas = numColum(saludo);
+        int numFilas = getNumFilas((double) saludo.length()/ (double) columnas);
         char matrix[][] = new char[numFilas][columnas];
         
         int pos = 0;
@@ -222,6 +225,21 @@ public class Enigma {
         }
         
         System.err.println(cadena);
+        
+        String orden = cadena.substring(cadena.length() - columnas-1, cadena.length()-1);
+        
+        //System.err.println("Digite el orden encritada: ");
+        //String ordenMsg = reader.next();
+        String ordenMsg = "CTENSLSFAEQTUNSCH0AAQIEB6BAUAEGEDJ";
+        System.err.println("El mensaje es : " + ordenMsg);
+        int ordenColumnas = orden.length();
+        int ordenNumFilas = (int)Math.ceil((double) ordenMsg.length()/ (double) ordenColumnas);
+        char ordenMatrix[][] = new char[ordenNumFilas][ordenColumnas];
+        
+        meteMensajeEnMatriz(ordenMatrix, ordenMsg);
+        imprimeMatrix(ordenMatrix);
+        
+        
         
         }
     
